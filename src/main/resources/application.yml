@@ -1,0 +1,27 @@
+server:
+  servlet:
+    context-path: /storefront
+  port: 8081
+spring:
+  application:
+    name: storefront
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/storefront
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: senha
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL82Dialect
+    hibernate:
+      ddl-auto: create
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    queue:
+      product-change-availability: product.change.availability.queue
+warehouse:
+  base-path: http://warehouseapp:8080/warehouse
