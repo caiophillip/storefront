@@ -18,44 +18,44 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProductServiceImpl implements IProductService {
 
-    private final ProductRepository productRepository;
+    private final ProductRepository repository;
     private final RestClient warehouseClient;
     private final IProductMapper mapper;
 
     @Override
-    public ProductEntity save(ProductEntity entity) {
-        return productRepository.save(entity);
+    public ProductEntity save(final ProductEntity entity) {
+        return repository.save(entity);
     }
 
     @Override
-    public void changeActivated(UUID id, boolean active) {
+    public void changeActivated(final UUID id, final boolean active) {
         var entity = findById(id);
         entity.setActive(active);
-        productRepository.save(entity);
+        repository.save(entity);
     }
 
     @Override
     public List<ProductEntity> findAllActive() {
-        return productRepository.findByActiveTrueOrderByNameAsc();
+        return repository.findByActiveTrueOrderByNameAsc();
     }
 
     @Override
-    public ProductInfoDTO findInfo(UUID id) {
+    public ProductInfoDTO findInfo(final UUID id) {
         var entity = findById(id);
         var price = requestCurrentAmount(id);
-        return mapper.toDto(entity, price);
+        return mapper.toDTO(entity, price);
     }
 
     @Override
-    public void purchase(UUID id) {
+    public void purchase(final UUID id) {
         purchaseWarehouse(id);
     }
 
-    private ProductEntity findById(final UUID id) {
-        return productRepository.findById(id).orElseThrow();
+    private ProductEntity findById(final UUID id){
+        return repository.findById(id).orElseThrow();
     }
 
-    private BigDecimal requestCurrentAmount(UUID id) {
+    private BigDecimal requestCurrentAmount(final UUID id) {
         var dto = warehouseClient.get()
                 .uri("/products/" + id)
                 .retrieve()
@@ -63,11 +63,12 @@ public class ProductServiceImpl implements IProductService {
         return dto.price();
     }
 
-    private void purchaseWarehouse(final UUID id) {
+    private void purchaseWarehouse(final UUID id){
         var path = String.format("/products/%s/purchase", id);
         warehouseClient.post()
                 .uri(path)
                 .retrieve()
                 .toBodilessEntity();
     }
+
 }

@@ -12,8 +12,8 @@ public class OpenAPIConfig {
     OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API da vitrine do E-commerce")
+                        .title("API da Vitrine do E-commerce")
                         .version("1.0")
-                        .description("Documentação da API da vitrine do e-commerce"));
+                        .description("Documentação da API da vitrine do e-commerce."));
     }
 }

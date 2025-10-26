@@ -16,5 +16,6 @@ public interface IProductService {
 
     ProductInfoDTO findInfo(final UUID id);
 
-    void purchase (final UUID id);
+    void purchase(final UUID id);
+
 }

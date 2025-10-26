@@ -1,15 +1,16 @@
-package com.example.storefront.dto;
+package com.example.storefront.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public record ProductDetailDTO(
+public record ProductDetailResponse(
         @JsonProperty("id")
         UUID id,
         @JsonProperty("name")
         String name,
         @JsonProperty("price")
-        BigDecimal price) {
+        BigDecimal price
+) {
 }
